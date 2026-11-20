@@ -99,132 +99,37 @@
   </div>
 
   <script>
-    // 1. Registrasi Service Worker (Syarat wajib PWA)
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('Service Worker terdaftar:', reg.scope))
-          .catch(err => console.error('Service Worker gagal:', err));
-      });
-    }
-
-    // 2. Tangkap Event Install PWA dari Browser
-    let deferredPrompt;
-    const installBanner = document.getElementById('installBanner');
-    const btnInstall = document.getElementById('btnInstall');
-    const btnClose = document.getElementById('btnClose');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      // Mencegah prompt mini default browser agar kita bisa memakai tombol custom
-      e.preventDefault();
-      deferredPrompt = e;
-      // Tampilkan tombol Install di halaman depan
-      installBanner.style.display = 'flex';
-    });
-
-    // 3. Aksi saat tombol Install diklik
-    btnInstall.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      
-      // Munculkan dialog instalasi native perangkat (Android/Desktop)
-      deferredPrompt.prompt();
-      
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`Pilihan user: ${outcome}`);
-      
-      deferredPrompt = null;
-      installBanner.style.display = 'none';
-    });
-
-    // Sembunyikan banner jika aplikasi sudah selesai di-install
-    window.addEventListener('appinstalled', () => {
-      installBanner.style.display = 'none';
-      deferredPrompt = null;
-    });
-
-    // Tombol tutup manual
-    btnClose.addEventListener('click', () => {
-      installBanner.style.display = 'none';
-    });
-  </script>
-
-<script>
-    // 1. MANIFEST INLINE (via Blob)
+    // Konfigurasi Manifest langsung di dalam index.html
     const manifestData = {
-      "name": "App Asap Pedas X Teko",
-      "short_name": "Asap Pedas X Teko",
-      "description": "Mmudahkan Pesan Makanan ",
+      "name": "Nama Lengkap Aplikasi Kamu",
+      "short_name": "NamaPendek",
+      "description": "Deskripsi singkat aplikasi kamu.",
       "start_url": window.location.href,
       "display": "standalone",
       "background_color": "#ffffff",
       "theme_color": "#0d6efd",
+      "orientation": "portrait-primary",
       "icons": [
         {
+          // Wajib menggunakan URL lengkap (https://...) atau Base64
           "src": "https://via.placeholder.com/192/0d6efd/ffffff?text=192",
           "type": "image/png",
-          "sizes": "192x192"
+          "sizes": "192x192",
+          "purpose": "any maskable"
         },
         {
           "src": "https://via.placeholder.com/512/0d6efd/ffffff?text=512",
           "type": "image/png",
-          "sizes": "512x512"
+          "sizes": "512x512",
+          "purpose": "any maskable"
         }
       ]
     };
 
+    // Mengubah objek JSON menjadi Blob URL dan memasangnya ke <link rel="manifest">
     const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
     const manifestURL = URL.createObjectURL(manifestBlob);
-    document.querySelector('#my-manifest').setAttribute('href', manifestURL);
-
-    // 2. SERVICE WORKER INLINE (via Blob)
-    const swCode = `
-      const CACHE_NAME = 'satu-file-v1';
-
-      self.addEventListener('install', (event) => {
-        self.skipWaiting();
-        event.waitUntil(
-          caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll([self.registration.scope]);
-          })
-        );
-      });
-
-      self.addEventListener('activate', (event) => {
-        event.waitUntil(self.clients.claim());
-      });
-
-      self.addEventListener('fetch', (event) => {
-        if (event.request.method !== 'GET') return;
-        event.respondWith(
-          caches.match(event.request).then((cached) => {
-            return cached || fetch(event.request).then((response) => {
-              const copy = response.clone();
-              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-              return response;
-            }).catch(() => cached);
-          })
-        );
-      });
-    `;
-
-    const statusEl = document.getElementById('status');
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        const swBlob = new Blob([swCode], { type: 'application/javascript' });
-        const swURL = URL.createObjectURL(swBlob);
-
-        navigator.serviceWorker.register(swURL)
-          .then((reg) => {
-            statusEl.textContent = 'Service Worker aktif (via Blob): ' + reg.scope;
-          })
-          .catch((err) => {
-            statusEl.textContent = 'Gagal mendaftarkan SW: ' + err.message;
-          });
-      });
-    } else {
-      statusEl.textContent = 'Browser tidak mendukung Service Worker.';
-    }
+    document.getElementById('my-manifest').setAttribute('href', manifestURL);
   </script>
 
   

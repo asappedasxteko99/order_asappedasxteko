@@ -6,7 +6,6 @@
   <title>Aplikasi Web</title>
   
   <!-- Link ke Manifest PWA -->
-  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f172a">
   
   <!-- Dukungan untuk iOS (Safari) -->
@@ -148,5 +147,86 @@
       installBanner.style.display = 'none';
     });
   </script>
+
+<script>
+    // 1. MANIFEST INLINE (via Blob)
+    const manifestData = {
+      "name": "App Asap Pedas X Teko",
+      "short_name": "Asap Pedas X Teko",
+      "description": "Mmudahkan Pesan Makanan ",
+      "start_url": window.location.href,
+      "display": "standalone",
+      "background_color": "#ffffff",
+      "theme_color": "#0d6efd",
+      "icons": [
+        {
+          "src": "https://via.placeholder.com/192/0d6efd/ffffff?text=192",
+          "type": "image/png",
+          "sizes": "192x192"
+        },
+        {
+          "src": "https://via.placeholder.com/512/0d6efd/ffffff?text=512",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+      ]
+    };
+
+    const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+    const manifestURL = URL.createObjectURL(manifestBlob);
+    document.querySelector('#my-manifest').setAttribute('href', manifestURL);
+
+    // 2. SERVICE WORKER INLINE (via Blob)
+    const swCode = `
+      const CACHE_NAME = 'satu-file-v1';
+
+      self.addEventListener('install', (event) => {
+        self.skipWaiting();
+        event.waitUntil(
+          caches.open(CACHE_NAME).then((cache) => {
+            return cache.addAll([self.registration.scope]);
+          })
+        );
+      });
+
+      self.addEventListener('activate', (event) => {
+        event.waitUntil(self.clients.claim());
+      });
+
+      self.addEventListener('fetch', (event) => {
+        if (event.request.method !== 'GET') return;
+        event.respondWith(
+          caches.match(event.request).then((cached) => {
+            return cached || fetch(event.request).then((response) => {
+              const copy = response.clone();
+              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+              return response;
+            }).catch(() => cached);
+          })
+        );
+      });
+    `;
+
+    const statusEl = document.getElementById('status');
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        const swBlob = new Blob([swCode], { type: 'application/javascript' });
+        const swURL = URL.createObjectURL(swBlob);
+
+        navigator.serviceWorker.register(swURL)
+          .then((reg) => {
+            statusEl.textContent = 'Service Worker aktif (via Blob): ' + reg.scope;
+          })
+          .catch((err) => {
+            statusEl.textContent = 'Gagal mendaftarkan SW: ' + err.message;
+          });
+      });
+    } else {
+      statusEl.textContent = 'Browser tidak mendukung Service Worker.';
+    }
+  </script>
+
+  
 </body>
 </html>

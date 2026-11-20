@@ -5,24 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Aplikasi Web</title>
   
-  <!-- PWA Meta Tags -->
+  <!-- Link ke Manifest PWA -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0d6efd">
+  <meta name="theme-color" content="#0f172a">
+  
+  <!-- Dukungan untuk iOS (Safari) -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-    html, body {
+    body, html {
       width: 100%;
       height: 100%;
       overflow: hidden;
-      font-family: system-ui, -apple-system, sans-serif;
       background-color: #ffffff;
     }
     /* Iframe Fullscreen untuk Google Apps Script */
@@ -32,78 +34,73 @@
       border: none;
       display: block;
     }
-    /* Banner Install Otomatis */
+    /* Banner / Tombol Install Mengambang di Halaman Depan */
     #installBanner {
-      display: none;
+      display: none; /* Muncul otomatis jika browser mendukung install */
       position: fixed;
-      bottom: 20px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
-      background: #1e293b;
+      background: #0f172a;
       color: #ffffff;
       padding: 14px 20px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border-radius: 50px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       z-index: 9999;
-      width: 90%;
-      max-width: 400px;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
       animation: slideUp 0.4s ease-out;
     }
     @keyframes slideUp {
-      from { bottom: -100px; opacity: 0; }
-      to { bottom: 20px; opacity: 1; }
+      from { bottom: -80px; opacity: 0; }
+      to { bottom: 24px; opacity: 1; }
     }
-    .banner-text {
+    #installBanner span {
       font-size: 14px;
-      line-height: 1.4;
-    }
-    .banner-actions {
-      display: flex;
-      gap: 8px;
-    }
-    button {
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
     }
     #btnInstall {
-      background: #0d6efd;
-      color: white;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #btnInstall:hover {
+      background: #1d4ed8;
     }
     #btnClose {
       background: transparent;
       color: #94a3b8;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0 4px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Embed Google Apps Script -->
+  <!-- Memuat Google Apps Script Anda -->
   <iframe 
     src="https://script.google.com/macros/s/AKfycbwvndVST2ihd0uiG8x-pLIh-PRhn2G_YvGmuO2tcOLKaxUtlyNgcGKHJdIFPvf5G_7hNw/exec" 
     allow="geolocation; microphone; camera; fullscreen">
   </iframe>
 
-  <!-- Pop-up Banner PWA -->
+  <!-- Pop-up Tombol Install PWA -->
   <div id="installBanner">
-    <div class="banner-text">
-      <strong>Install Aplikasi</strong><br>
-      Akses lebih cepat langsung dari layar utama.
-    </div>
-    <div class="banner-actions">
-      <button id="btnClose">Nanti</button>
-      <button id="btnInstall">Install</button>
-    </div>
+    <span>Pasang Aplikasi ini</span>
+    <button id="btnInstall">Install</button>
+    <button id="btnClose" title="Tutup">&times;</button>
   </div>
 
   <script>
-    // 1. Daftarkan Service Worker
+    // 1. Registrasi Service Worker (Syarat wajib PWA)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
@@ -112,44 +109,43 @@
       });
     }
 
-    // 2. Tangkap Event Install PWA
+    // 2. Tangkap Event Install PWA dari Browser
     let deferredPrompt;
     const installBanner = document.getElementById('installBanner');
     const btnInstall = document.getElementById('btnInstall');
     const btnClose = document.getElementById('btnClose');
 
     window.addEventListener('beforeinstallprompt', (e) => {
-      // Mencegah mini-infobar bawaan browser muncul terlambat
+      // Mencegah prompt mini default browser agar kita bisa memakai tombol custom
       e.preventDefault();
       deferredPrompt = e;
-      
-      // Langsung tampilkan banner install di halaman depan
+      // Tampilkan tombol Install di halaman depan
       installBanner.style.display = 'flex';
     });
 
-    // Trigger instalasi saat tombol diklik
+    // 3. Aksi saat tombol Install diklik
     btnInstall.addEventListener('click', async () => {
       if (!deferredPrompt) return;
       
-      // Memunculkan dialog install resmi dari browser
+      // Munculkan dialog instalasi native perangkat (Android/Desktop)
       deferredPrompt.prompt();
       
       const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        console.log('User menerima instalasi PWA');
-      }
+      console.log(`Pilihan user: ${outcome}`);
+      
       deferredPrompt = null;
       installBanner.style.display = 'none';
     });
 
-    btnClose.addEventListener('click', () => {
-      installBanner.style.display = 'none';
-    });
-
-    // Sembunyikan banner jika sudah terinstall
+    // Sembunyikan banner jika aplikasi sudah selesai di-install
     window.addEventListener('appinstalled', () => {
       installBanner.style.display = 'none';
       deferredPrompt = null;
+    });
+
+    // Tombol tutup manual
+    btnClose.addEventListener('click', () => {
+      installBanner.style.display = 'none';
     });
   </script>
 </body>

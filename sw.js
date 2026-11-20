@@ -1,5 +1,5 @@
 const CACHE_NAME = 'gas-pwa-v1';
-const urlsToCache = [
+const ASSETS = [
   './',
   './index.html',
   './manifest.json'
@@ -7,9 +7,13 @@ const urlsToCache = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('fetch', (event) => {

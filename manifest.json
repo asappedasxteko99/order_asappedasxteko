@@ -1,22 +1,22 @@
 {
-  "name": "Order Asap Pedas x Teko",
+  "name": "Asap Pedas x Teko",
   "short_name": "AsapPedas",
   "description": "Aplikasi Pemesanan Asap Pedas x Teko",
   "start_url": "/order_asappedasxteko/index.html",
   "scope": "/order_asappedasxteko/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#d32f2f",
+  "theme_color": "#008E98",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3075/3075977.png",
+      "src": "https://asappedasxteko99.github.io/order_asappedasxteko/Icon%20192%20App%20Asap%20Pedas.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3075/3075977.png",
+      "src": "https://asappedasxteko99.github.io/order_asappedasxteko/Icon%20512%20App%20Asap%20Pedas.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

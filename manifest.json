@@ -1,0 +1,20 @@
+
+{
+  "name": "Order Asap Pedas X Teko",
+  "short_name": "Asap Pedas",
+  "description": "Aplikasi Order Asap Pedas X Teko",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#b91c1c",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

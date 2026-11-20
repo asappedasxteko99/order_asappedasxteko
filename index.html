@@ -2,347 +2,257 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#151515">
-<title>Asap Pedas x Teko 99</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b91c1c">
+  <meta name="description" content="Order Asap Pedas X Teko">
 
-<meta name="description" content="Sedang mencari makanan enak di Kota Batu? Nikmati aneka makanan dan minuman lezat dari ASAP PEDAS X TEKO. Temukan menu favorit Anda dan pesan makanan online dengan mudah!">
-<meta name="robots" content="index, follow">
-<meta name="author" content="ASAP PEDAS X TEKO">
-<meta name="keywords" content="makanan enak di Kota Batu, makanan dan minuman di Kota Batu, kuliner Kota Batu, tempat makan enak Kota Batu, makanan pedas Kota Batu, pesan makanan online Kota Batu, kuliner murah Kota Batu, ASAP PEDAS X TEKO">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Makanan Enak di Kota Batu | ASAP PEDAS X TEKO">
-<meta property="og:description" content="Temukan aneka makanan dan minuman lezat di Kota Batu. Pesan menu favorit Anda di ASAP PEDAS X TEKO.">
-<meta property="og:url" content="https://asappedasxteko99.github.io/order_asappedasxteko/">
-<meta property="og:site_name" content="ASAP PEDAS X TEKO">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Makanan Enak di Kota Batu - ASAP PEDAS X TEKO">
-<meta name="twitter:description" content="Aneka makanan dan minuman lezat di Kota Batu. Pesan sekarang!">
+  <title>Order Asap Pedas X Teko</title>
 
-<style>
-* {
-  box-sizing: border-box;
-}
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./icon.svg">
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #151515;
-  color: #fff;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-.install-banner {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 30px);
-  max-width: 450px;
-  background: #222;
-  border: 1px solid #444;
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: 0 10px 40px rgba(0,0,0,.5);
-  z-index: 999999;
-  animation: slideUp .4s ease;
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff;
+    }
 
-@keyframes slideUp {
-  from {
-    transform: translate(-50%, 100px);
-    opacity: 0;
-  }
-  to {
-    transform: translate(-50%, 0);
-    opacity: 1;
-  }
-}
+    #installBanner {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 30px);
+      max-width: 420px;
+      padding: 18px;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.25);
+      z-index: 999999;
+      border: 1px solid #eee;
+    }
 
-.banner-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+    .banner-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-.banner-icon {
-  width: 55px;
-  height: 55px;
-  border-radius: 14px;
-  background: #ff5722;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  flex-shrink: 0;
-}
+    .banner-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 14px;
+      background: #b91c1c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
 
-.banner-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+    .banner-title {
+      font-size: 17px;
+      font-weight: bold;
+      color: #222;
+    }
 
-.banner-description {
-  font-size: 12px;
-  color: #bbb;
-  line-height: 1.5;
-}
+    .banner-desc {
+      font-size: 13px;
+      color: #666;
+      margin-top: 5px;
+    }
 
-.close-btn {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  border: none;
-  background: transparent;
-  color: #aaa;
-  font-size: 24px;
-  cursor: pointer;
-}
+    .banner-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 17px;
+    }
 
-.banner-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 16px;
-}
+    .btn-install {
+      flex: 1;
+      border: none;
+      padding: 13px;
+      background: #b91c1c;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+    }
 
-.install-btn {
-  flex: 1;
-  border: none;
-  padding: 13px;
-  border-radius: 10px;
-  background: #ff5722;
-  color: #fff;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .btn-later {
+      border: none;
+      padding: 13px 18px;
+      background: #eeeeee;
+      color: #333;
+      border-radius: 10px;
+      cursor: pointer;
+    }
 
-.later-btn {
-  border: none;
-  padding: 13px 18px;
-  border-radius: 10px;
-  background: #333;
-  color: #fff;
-  cursor: pointer;
-}
+    #manualInstall {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      background: #fff7ed;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #7c2d12;
+      line-height: 1.6;
+    }
 
-.install-btn:active,
-.later-btn:active {
-  transform: scale(.97);
-}
-
-#app-container {
-  width: 100%;
-  height: 100vh;
-  border: none;
-}
-
-.instruction {
-  display: none;
-  font-size: 13px;
-  line-height: 1.7;
-  margin-top: 12px;
-  padding: 12px;
-  background: #333;
-  border-radius: 10px;
-  color: #fff;
-}
-
-.instruction strong {
-  color: #ff7043;
-}
-
-@media (max-width: 400px) {
-  .install-banner {
-    padding: 15px;
-  }
-
-  .banner-title {
-    font-size: 14px;
-  }
-
-  .banner-buttons button {
-    font-size: 12px;
-  }
-}
-</style>
+    #openWebsite {
+      display: none;
+      margin: 30px auto;
+      padding: 15px 25px;
+      background: #b91c1c;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- Website Target -->
-<iframe
-  id="app-container"
-  src="https://script.google.com/macros/s/AKfycbwvndVST2ihd0uiG8x-pLIh-PRhn2G_YvGmuO2tcOLKaxUtlyNgcGKHJdIFPvf5G_7hNw/exec"
-  allow="clipboard-read; clipboard-write"
-></iframe>
+  <!-- Banner Install PWA -->
+  <div id="installBanner">
 
-<!-- Banner Install -->
-<div class="install-banner" id="installBanner">
+    <div class="banner-header">
+      <div class="banner-icon">🍗</div>
 
-  <button class="close-btn" onclick="closeBanner()">×</button>
+      <div>
+        <div class="banner-title">
+          Order Asap Pedas X Teko
+        </div>
 
-  <div class="banner-header">
-
-    <div class="banner-icon">
-      🍗
-    </div>
-
-    <div>
-      <div class="banner-title">
-        Asap Pedas x Teko 99
-      </div>
-
-      <div class="banner-description">
-        Tambahkan ke layar utama untuk akses cepat,
-        pesan lebih praktis kapan saja!
+        <div class="banner-desc">
+          Install aplikasi untuk akses lebih cepat!
+        </div>
       </div>
     </div>
 
-  </div>
+    <div class="banner-buttons">
+      <button class="btn-install" id="installBtn">
+        INSTALL SEKARANG
+      </button>
 
-  <div class="banner-buttons">
+      <button class="btn-later" id="laterBtn">
+        NANTI
+      </button>
+    </div>
 
-    <button class="install-btn" onclick="installApp()">
-      📲 Pasang Aplikasi
-    </button>
-
-    <button class="later-btn" onclick="closeBanner()">
-      Nanti
-    </button>
-
-  </div>
-
-  <div class="instruction" id="instruction">
-
-    <strong>📱 Cara menambahkan ke layar utama:</strong>
-
-    <div id="instructionText"></div>
+    <div id="manualInstall">
+      <b>Cara Install:</b><br>
+      1. Klik menu browser (⋮ atau Share).<br>
+      2. Pilih <b>Tambahkan ke Layar Utama</b> / 
+      <b>Add to Home Screen</b>.<br>
+      3. Klik Tambahkan / Install.
+    </div>
 
   </div>
 
-</div>
+  <button id="openWebsite">
+    BUKA WEBSITE ORDER
+  </button>
 
-<script>
+  <script>
+    // URL WEBSITE ORDER
+    const TARGET_URL =
+      "https://script.google.com/macros/s/AKfycbwvndVST2ihd0uiG8x-pLIh-PRhn2G_YvGmuO2tcOLKaxUtlyNgcGKHJdIFPvf5G_7hNw/exec";
 
-const TARGET_URL =
-  "https://asappedasxteko99.github.io/order_asappedasxteko/";
+    const banner = document.getElementById("installBanner");
+    const installBtn = document.getElementById("installBtn");
+    const laterBtn = document.getElementById("laterBtn");
+    const manualInstall = document.getElementById("manualInstall");
+    const openWebsite = document.getElementById("openWebsite");
 
-let deferredPrompt = null;
+    let deferredPrompt = null;
 
-const banner = document.getElementById("installBanner");
+    // Cek apakah sudah terinstall
+    const isInstalled =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true;
 
-// Banner tampil jika belum ditutup selama 7 hari
-const dismissedUntil = localStorage.getItem("bannerDismissed");
-
-if (dismissedUntil && Date.now() < Number(dismissedUntil)) {
-  banner.style.display = "none";
-}
-
-// Deteksi aplikasi sudah diinstal
-if (
-  window.matchMedia("(display-mode: standalone)").matches ||
-  window.navigator.standalone === true
-) {
-  banner.style.display = "none";
-}
-
-// Deteksi native install prompt Android
-window.addEventListener("beforeinstallprompt", (event) => {
-
-  event.preventDefault();
-
-  deferredPrompt = event;
-
-  banner.style.display = "block";
-
-});
-
-// Jika aplikasi berhasil diinstal
-window.addEventListener("appinstalled", () => {
-
-  banner.style.display = "none";
-
-  localStorage.setItem(
-    "bannerDismissed",
-    Date.now() + 30 * 24 * 60 * 60 * 1000
-  );
-
-});
-
-// Tombol install
-async function installApp() {
-
-  // Android / Chrome yang mendukung PWA install
-  if (deferredPrompt) {
-
-    deferredPrompt.prompt();
-
-    const result = await deferredPrompt.userChoice;
-
-    if (result.outcome === "accepted") {
-      banner.style.display = "none";
+    // Redirect ke website order
+    function openOrderWebsite() {
+      window.location.replace(TARGET_URL);
     }
 
-    deferredPrompt = null;
+    // Registrasi Service Worker
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function() {
+        navigator.serviceWorker.register("./sw.js")
+          .catch(function(error) {
+            console.log("Service Worker Error:", error);
+          });
+      });
+    }
 
-    return;
-  }
+    // Jika aplikasi sudah terinstall
+    if (isInstalled) {
+      openOrderWebsite();
+    } else {
+      // Tampilkan banner
+      banner.style.display = "block";
 
-  // iPhone / iPad
-  const isIOS =
-    /iphone|ipad|ipod/i.test(navigator.userAgent);
+      // Jika browser tidak mendukung install prompt
+      openWebsite.style.display = "block";
+      openWebsite.onclick = openOrderWebsite;
+    }
 
-  if (isIOS) {
+    // Browser mendeteksi PWA bisa diinstall
+    window.addEventListener("beforeinstallprompt", function(e) {
+      e.preventDefault();
+      deferredPrompt = e;
 
-    showInstruction(
-      "Buka menu <strong>Share ⬆️</strong> " +
-      "di Safari, lalu pilih <strong>" +
-      "Add to Home Screen / Tambahkan ke Layar Utama</strong>."
-    );
+      installBtn.style.display = "block";
+      manualInstall.style.display = "none";
+    });
 
-    return;
-  }
+    // Tombol INSTALL
+    installBtn.addEventListener("click", async function() {
 
-  // Android Chrome tanpa native prompt
-  showInstruction(
-    "Klik menu <strong>⋮ (tiga titik)</strong> " +
-    "di Chrome, kemudian pilih " +
-    "<strong>Tambahkan ke layar utama</strong> " +
-    "atau <strong>Install aplikasi</strong>."
-  );
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
 
-}
+        const result = await deferredPrompt.userChoice;
 
-// Menampilkan instruksi manual
-function showInstruction(text) {
+        if (result.outcome === "accepted") {
+          banner.style.display = "none";
+        }
 
-  const instruction =
-    document.getElementById("instruction");
+        deferredPrompt = null;
 
-  const instructionText =
-    document.getElementById("instructionText");
+      } else {
+        // iPhone / Safari / browser yang tidak menyediakan prompt
+        manualInstall.style.display = "block";
+      }
+    });
 
-  instructionText.innerHTML = text;
+    // Tombol NANTI
+    laterBtn.addEventListener("click", function() {
+      banner.style.display = "none";
+      openWebsite.style.display = "block";
+    });
 
-  instruction.style.display = "block";
+    // Setelah berhasil diinstall
+    window.addEventListener("appinstalled", function() {
+      banner.style.display = "none";
+      openOrderWebsite();
+    });
 
-}
-
-// Tutup banner
-function closeBanner() {
-
-  banner.style.display = "none";
-
-  localStorage.setItem(
-    "bannerDismissed",
-    Date.now() + 7 * 24 * 60 * 60 * 1000
-  );
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>

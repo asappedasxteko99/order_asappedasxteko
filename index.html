@@ -1,131 +1,156 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta name="description" content="Sedang mencari makanan enak di Kota Batu? Nikmati aneka makanan dan minuman lezat dari ASAP PEDAS X TEKO. Temukan menu favorit Anda dan pesan makanan online dengan mudah!">
-<meta name="robots" content="index, follow">
-<meta name="author" content="ASAP PEDAS X TEKO">
-<meta name="keywords" content="makanan enak di Kota Batu, makanan dan minuman di Kota Batu, kuliner Kota Batu, tempat makan enak Kota Batu, makanan pedas Kota Batu, pesan makanan online Kota Batu, kuliner murah Kota Batu, ASAP PEDAS X TEKO">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Makanan Enak di Kota Batu | ASAP PEDAS X TEKO">
-<meta property="og:description" content="Temukan aneka makanan dan minuman lezat di Kota Batu. Pesan menu favorit Anda di ASAP PEDAS X TEKO.">
-<meta property="og:url" content="https://asappedasxteko99.github.io/order_asappedasxteko/">
-<meta property="og:site_name" content="ASAP PEDAS X TEKO">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Makanan Enak di Kota Batu - ASAP PEDAS X TEKO">
-<meta name="twitter:description" content="Aneka makanan dan minuman lezat di Kota Batu. Pesan sekarang!">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ASAP PEDAS X TEKO</title>
-  <!-- Menghubungkan ke Manifest PWA -->
+  <title>Aplikasi Web</title>
+  
+  <!-- PWA Meta Tags -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0d6efd">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    body, html {
+    html, body {
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #f4f4f9;
-    }
-    /* Banner Tombol Install */
-    #install-banner {
-      display: none; /* Muncul otomatis jika browser mendukung install PWA */
-      background-color: #0d6efd;
-      color: white;
-      padding: 12px 16px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      position: relative;
-      z-index: 1000;
-    }
-    #install-btn {
+      font-family: system-ui, -apple-system, sans-serif;
       background-color: #ffffff;
-      color: #0d6efd;
-      border: none;
-      padding: 8px 18px;
-      font-size: 15px;
-      font-weight: bold;
-      border-radius: 20px;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      transition: transform 0.2s;
     }
-    #install-btn:active {
-      transform: scale(0.96);
-    }
-    /* Frame Google Apps Script */
+    /* Iframe Fullscreen untuk Google Apps Script */
     iframe {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
     }
+    /* Banner Install Otomatis */
+    #installBanner {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1e293b;
+      color: #ffffff;
+      padding: 14px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 9999;
+      width: 90%;
+      max-width: 400px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      animation: slideUp 0.4s ease-out;
+    }
+    @keyframes slideUp {
+      from { bottom: -100px; opacity: 0; }
+      to { bottom: 20px; opacity: 1; }
+    }
+    .banner-text {
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .banner-actions {
+      display: flex;
+      gap: 8px;
+    }
+    button {
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    #btnInstall {
+      background: #0d6efd;
+      color: white;
+    }
+    #btnClose {
+      background: transparent;
+      color: #94a3b8;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Bagian Tombol Install -->
-  <div id="install-banner">
-    <button id="install-btn">Klik install Aplikasi ini</button>
-  </div>
-
-  <!-- Memuat Link Google Apps Script Anda -->
+  <!-- Embed Google Apps Script -->
   <iframe 
-    id="gas-frame"
-    src="https://script.google.com/macros/s/AKfycbxGLLaq6KnfKsruAehb4JY6OnITr31Pk6kP5egBK7aFEbAfE9_na_vUFoPlUfHYojKGow/exec" 
-    allow="geolocation; microphone; camera">
+    src="https://script.google.com/macros/s/AKfycbwvndVST2ihd0uiG8x-pLIh-PRhn2G_YvGmuO2tcOLKaxUtlyNgcGKHJdIFPvf5G_7hNw/exec" 
+    allow="geolocation; microphone; camera; fullscreen">
   </iframe>
 
+  <!-- Pop-up Banner PWA -->
+  <div id="installBanner">
+    <div class="banner-text">
+      <strong>Install Aplikasi</strong><br>
+      Akses lebih cepat langsung dari layar utama.
+    </div>
+    <div class="banner-actions">
+      <button id="btnClose">Nanti</button>
+      <button id="btnInstall">Install</button>
+    </div>
+  </div>
+
   <script>
-    // 1. Registrasi Service Worker
+    // 1. Daftarkan Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
           .then(reg => console.log('Service Worker terdaftar:', reg.scope))
-          .catch(err => console.error('Gagal daftar Service Worker:', err));
+          .catch(err => console.error('Service Worker gagal:', err));
       });
     }
 
-    // 2. Logika Tombol Install PWA
+    // 2. Tangkap Event Install PWA
     let deferredPrompt;
-    const installBanner = document.getElementById('install-banner');
-    const installBtn = document.getElementById('install-btn');
+    const installBanner = document.getElementById('installBanner');
+    const btnInstall = document.getElementById('btnInstall');
+    const btnClose = document.getElementById('btnClose');
 
     window.addEventListener('beforeinstallprompt', (e) => {
-      // Mencegah browser menampilkan prompt mini otomatis
+      // Mencegah mini-infobar bawaan browser muncul terlambat
       e.preventDefault();
-      // Simpan event untuk dipicu saat tombol diklik
       deferredPrompt = e;
-      // Tampilkan banner tombol install
-      installBanner.style.display = 'block';
+      
+      // Langsung tampilkan banner install di halaman depan
+      installBanner.style.display = 'flex';
     });
 
-    installBtn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        // Tampilkan dialog konfirmasi install aplikasi
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`Pilihan user: ${outcome}`);
-        
-        // Reset variabel dan sembunyikan banner setelah diinstall
-        deferredPrompt = null;
-        if (outcome === 'accepted') {
-          installBanner.style.display = 'none';
-        }
+    // Trigger instalasi saat tombol diklik
+    btnInstall.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      
+      // Memunculkan dialog install resmi dari browser
+      deferredPrompt.prompt();
+      
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('User menerima instalasi PWA');
       }
+      deferredPrompt = null;
+      installBanner.style.display = 'none';
     });
 
-    // Sembunyikan tombol jika aplikasi sudah selesai diinstall
+    btnClose.addEventListener('click', () => {
+      installBanner.style.display = 'none';
+    });
+
+    // Sembunyikan banner jika sudah terinstall
     window.addEventListener('appinstalled', () => {
       installBanner.style.display = 'none';
       deferredPrompt = null;
     });
   </script>
-
 </body>
 </html>

@@ -1,148 +1,335 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-   <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="icon" type="image/png" href="https://monsterlongpotato.github.io/absensi/Logo%20Long%20Potato%20PNG%20500%20x%20500%20px.png">
-    <meta name="theme-color" content="#fc8c02">
-    <title>Aplikasi Absensi Long Potato</title>
-    
-    <!-- Manifest & Icon untuk Pintasan Chrome (PWA) -->
-    <link rel="manifest" id="manifest-placeholder">
-    <link rel="apple-touch-icon" href="https://monsterlongpotato.github.io/absensi/Logo%20Long%20Potato%20PNG%20500%20x%20500%20px.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#151515">
+<title>Asap Pedas x Teko 99</title>
 
+<style>
+* {
+  box-sizing: border-box;
+}
 
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    body, html {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #ffffff;
-    }
-    /* Iframe Fullscreen untuk Google Apps Script */
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-    /* Banner / Tombol Install Mengambang di Halaman Depan */
-    #installBanner {
-      display: none; /* Muncul otomatis jika browser mendukung install */
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0f172a;
-      color: #ffffff;
-      padding: 14px 20px;
-      border-radius: 50px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      align-items: center;
-      gap: 14px;
-      animation: slideUp 0.4s ease-out;
-    }
-    @keyframes slideUp {
-      from { bottom: -80px; opacity: 0; }
-      to { bottom: 24px; opacity: 1; }
-    }
-    #installBanner span {
-      font-size: 14px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    #btnInstall {
-      background: #2563eb;
-      color: #ffffff;
-      border: none;
-      padding: 8px 18px;
-      border-radius: 30px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    #btnInstall:hover {
-      background: #1d4ed8;
-    }
-    #btnClose {
-      background: transparent;
-      color: #94a3b8;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      padding: 0 4px;
-    }
-  </style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #151515;
+  color: #fff;
+}
+
+.install-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 30px);
+  max-width: 450px;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.5);
+  z-index: 999999;
+  animation: slideUp .4s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+.banner-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.banner-icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 14px;
+  background: #ff5722;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.banner-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.banner-description {
+  font-size: 12px;
+  color: #bbb;
+  line-height: 1.5;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  border: none;
+  background: transparent;
+  color: #aaa;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.banner-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.install-btn {
+  flex: 1;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  background: #ff5722;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.later-btn {
+  border: none;
+  padding: 13px 18px;
+  border-radius: 10px;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+.install-btn:active,
+.later-btn:active {
+  transform: scale(.97);
+}
+
+#app-container {
+  width: 100%;
+  height: 100vh;
+  border: none;
+}
+
+.instruction {
+  display: none;
+  font-size: 13px;
+  line-height: 1.7;
+  margin-top: 12px;
+  padding: 12px;
+  background: #333;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.instruction strong {
+  color: #ff7043;
+}
+
+@media (max-width: 400px) {
+  .install-banner {
+    padding: 15px;
+  }
+
+  .banner-title {
+    font-size: 14px;
+  }
+
+  .banner-buttons button {
+    font-size: 12px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Memuat Google Apps Script Anda -->
-  <iframe 
-    src="https://script.google.com/macros/s/AKfycbwvndVST2ihd0uiG8x-pLIh-PRhn2G_YvGmuO2tcOLKaxUtlyNgcGKHJdIFPvf5G_7hNw/exec" 
-    allow="geolocation; microphone; camera; fullscreen">
-  </iframe>
+<!-- Website Target -->
+<iframe
+  id="app-container"
+  src="https://asappedasxteko99.github.io/order_asappedasxteko/"
+  allow="clipboard-read; clipboard-write"
+></iframe>
 
-  <!-- Pop-up Tombol Install PWA -->
-  <div id="installBanner">
-    <span>Pasang Aplikasi ini</span>
-    <button id="btnInstall">Install</button>
-    <button id="btnClose" title="Tutup">&times;</button>
+<!-- Banner Install -->
+<div class="install-banner" id="installBanner">
+
+  <button class="close-btn" onclick="closeBanner()">×</button>
+
+  <div class="banner-header">
+
+    <div class="banner-icon">
+      🍗
+    </div>
+
+    <div>
+      <div class="banner-title">
+        Asap Pedas x Teko 99
+      </div>
+
+      <div class="banner-description">
+        Tambahkan ke layar utama untuk akses cepat,
+        pesan lebih praktis kapan saja!
+      </div>
+    </div>
+
   </div>
 
-  <script>
-    // 2. LOGIKA INSTALL PINTASAN KE LAYAR UTAMA (PWA)
-        // Membuat file manifest.json secara dinamis di dalam satu file
-        const manifestData = {
-            "name": "Absensi Monster Long Potato",
-            "short_name": "Absensi Long Potato",
-            "start_url": window.location.href,
-            "display": "standalone",
-            "background_color": "#ffffff",
-            "theme_color": "#ffe0c4",
-            "icons": [{
-                "src": "https://monsterlongpotato.github.io/absensi/Logo%20Long%20Potato%20PNG%20500%20x%20500%20px.png",
-                "sizes": "512x512",
-                "type": "image/png"
-            }]
-        };
-        const stringManifest = JSON.stringify(manifestData);
-        const blob = new Blob([stringManifest], {type: 'application/json'});
-        const manifestURL = URL.createObjectURL(blob);
-        document.querySelector('#manifest-placeholder').setAttribute('href', manifestURL);
+  <div class="banner-buttons">
 
-        // Menangkap event install dari Google Chrome HP
-        let deferredPrompt;
-        const installBanner = document.getElementById('installbanner');
-        const btnInstall = document.getElementById('btninstall');
+    <button class="install-btn" onclick="installApp()">
+      📲 Pasang Aplikasi
+    </button>
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            // Munculkan banner install di bagian bawah layar
-            installBanner.style.display = 'flex';
-        });
+    <button class="later-btn" onclick="closeBanner()">
+      Nanti
+    </button>
 
-        btnInstall.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    installBanner.style.display = 'none';
-                }
-                deferredPrompt = null;
-            }
-        });
-  </script>
+  </div>
 
-  
+  <div class="instruction" id="instruction">
+
+    <strong>📱 Cara menambahkan ke layar utama:</strong>
+
+    <div id="instructionText"></div>
+
+  </div>
+
+</div>
+
+<script>
+
+const TARGET_URL =
+  "https://asappedasxteko99.github.io/order_asappedasxteko/";
+
+let deferredPrompt = null;
+
+const banner = document.getElementById("installBanner");
+
+// Banner tampil jika belum ditutup selama 7 hari
+const dismissedUntil = localStorage.getItem("bannerDismissed");
+
+if (dismissedUntil && Date.now() < Number(dismissedUntil)) {
+  banner.style.display = "none";
+}
+
+// Deteksi aplikasi sudah diinstal
+if (
+  window.matchMedia("(display-mode: standalone)").matches ||
+  window.navigator.standalone === true
+) {
+  banner.style.display = "none";
+}
+
+// Deteksi native install prompt Android
+window.addEventListener("beforeinstallprompt", (event) => {
+
+  event.preventDefault();
+
+  deferredPrompt = event;
+
+  banner.style.display = "block";
+
+});
+
+// Jika aplikasi berhasil diinstal
+window.addEventListener("appinstalled", () => {
+
+  banner.style.display = "none";
+
+  localStorage.setItem(
+    "bannerDismissed",
+    Date.now() + 30 * 24 * 60 * 60 * 1000
+  );
+
+});
+
+// Tombol install
+async function installApp() {
+
+  // Android / Chrome yang mendukung PWA install
+  if (deferredPrompt) {
+
+    deferredPrompt.prompt();
+
+    const result = await deferredPrompt.userChoice;
+
+    if (result.outcome === "accepted") {
+      banner.style.display = "none";
+    }
+
+    deferredPrompt = null;
+
+    return;
+  }
+
+  // iPhone / iPad
+  const isIOS =
+    /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  if (isIOS) {
+
+    showInstruction(
+      "Buka menu <strong>Share ⬆️</strong> " +
+      "di Safari, lalu pilih <strong>" +
+      "Add to Home Screen / Tambahkan ke Layar Utama</strong>."
+    );
+
+    return;
+  }
+
+  // Android Chrome tanpa native prompt
+  showInstruction(
+    "Klik menu <strong>⋮ (tiga titik)</strong> " +
+    "di Chrome, kemudian pilih " +
+    "<strong>Tambahkan ke layar utama</strong> " +
+    "atau <strong>Install aplikasi</strong>."
+  );
+
+}
+
+// Menampilkan instruksi manual
+function showInstruction(text) {
+
+  const instruction =
+    document.getElementById("instruction");
+
+  const instructionText =
+    document.getElementById("instructionText");
+
+  instructionText.innerHTML = text;
+
+  instruction.style.display = "block";
+
+}
+
+// Tutup banner
+function closeBanner() {
+
+  banner.style.display = "none";
+
+  localStorage.setItem(
+    "bannerDismissed",
+    Date.now() + 7 * 24 * 60 * 60 * 1000
+  );
+
+}
+
+</script>
+
 </body>
 </html>

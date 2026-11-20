@@ -2,257 +2,300 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#b91c1c">
-  <meta name="description" content="Order Asap Pedas X Teko">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Order Asap Pedas X Teko</title>
+<title>Asap Pedas X Teko</title>
 
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" href="./icon.svg">
-  <link rel="apple-touch-icon" href="./icon.svg">
+<meta name="theme-color" content="#b91c1c">
+<meta name="description" content="Order Asap Pedas X Teko">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg">
+<link rel="apple-touch-icon" href="./icon.svg">
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    #installBanner {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 30px);
-      max-width: 420px;
-      padding: 18px;
-      background: #ffffff;
-      border-radius: 18px;
-      box-shadow: 0 5px 25px rgba(0,0,0,.25);
-      z-index: 999999;
-      border: 1px solid #eee;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff;
+}
 
-    .banner-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+/* Banner Install */
+#installBanner {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 30px);
+  max-width: 420px;
+  padding: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+  z-index: 999999;
+}
 
-    .banner-icon {
-      width: 55px;
-      height: 55px;
-      border-radius: 14px;
-      background: #b91c1c;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 28px;
-      flex-shrink: 0;
-    }
+.banner-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-    .banner-title {
-      font-size: 17px;
-      font-weight: bold;
-      color: #222;
-    }
+.banner-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  background: #b91c1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+}
 
-    .banner-desc {
-      font-size: 13px;
-      color: #666;
-      margin-top: 5px;
-    }
+.banner-title {
+  font-size: 17px;
+  font-weight: bold;
+  color: #222;
+}
 
-    .banner-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 17px;
-    }
+.banner-desc {
+  font-size: 13px;
+  color: #666;
+  margin-top: 5px;
+}
 
-    .btn-install {
-      flex: 1;
-      border: none;
-      padding: 13px;
-      background: #b91c1c;
-      color: white;
-      font-weight: bold;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+.btn-install {
+  width: 100%;
+  margin-top: 18px;
+  padding: 15px;
+  background: #b91c1c;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .btn-later {
-      border: none;
-      padding: 13px 18px;
-      background: #eeeeee;
-      color: #333;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+.btn-install:active {
+  transform: scale(.98);
+}
 
-    #manualInstall {
-      display: none;
-      margin-top: 12px;
-      padding: 12px;
-      background: #fff7ed;
-      border-radius: 10px;
-      font-size: 13px;
-      color: #7c2d12;
-      line-height: 1.6;
-    }
+.btn-later {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  background: #f3f3f3;
+  color: #555;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
 
-    #openWebsite {
-      display: none;
-      margin: 30px auto;
-      padding: 15px 25px;
-      background: #b91c1c;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+#manualInstall {
+  display: none;
+  margin-top: 15px;
+  padding: 13px;
+  background: #fff7ed;
+  border-radius: 12px;
+  color: #7c2d12;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- Banner Install PWA -->
-  <div id="installBanner">
+<!-- Banner Install -->
+<div id="installBanner">
 
-    <div class="banner-header">
-      <div class="banner-icon">🍗</div>
+  <div class="banner-header">
 
-      <div>
-        <div class="banner-title">
-          Order Asap Pedas X Teko
-        </div>
+    <div class="banner-icon">🍗</div>
 
-        <div class="banner-desc">
-          Install aplikasi untuk akses lebih cepat!
-        </div>
+    <div>
+      <div class="banner-title">
+        Asap Pedas X Teko
       </div>
-    </div>
 
-    <div class="banner-buttons">
-      <button class="btn-install" id="installBtn">
-        INSTALL SEKARANG
-      </button>
-
-      <button class="btn-later" id="laterBtn">
-        NANTI
-      </button>
-    </div>
-
-    <div id="manualInstall">
-      <b>Cara Install:</b><br>
-      1. Klik menu browser (⋮ atau Share).<br>
-      2. Pilih <b>Tambahkan ke Layar Utama</b> / 
-      <b>Add to Home Screen</b>.<br>
-      3. Klik Tambahkan / Install.
+      <div class="banner-desc">
+        Install aplikasi untuk akses order lebih cepat!
+      </div>
     </div>
 
   </div>
 
-  <button id="openWebsite">
-    BUKA WEBSITE ORDER
+  <button class="btn-install" id="installBtn">
+    INSTALL SEKARANG
   </button>
 
-  <script>
-    // URL WEBSITE ORDER
-    const TARGET_URL =
-      "https://script.google.com/macros/s/AKfycbwvndVST2ihd0uiG8x-pLIh-PRhn2G_YvGmuO2tcOLKaxUtlyNgcGKHJdIFPvf5G_7hNw/exec";
+  <button class="btn-later" id="laterBtn">
+    NANTI
+  </button>
 
-    const banner = document.getElementById("installBanner");
-    const installBtn = document.getElementById("installBtn");
-    const laterBtn = document.getElementById("laterBtn");
-    const manualInstall = document.getElementById("manualInstall");
-    const openWebsite = document.getElementById("openWebsite");
+  <div id="manualInstall">
+    <b>Instalasi manual:</b><br>
+    Klik menu browser <b>⋮</b>, lalu pilih
+    <b>Tambahkan ke Layar Utama</b> atau
+    <b>Install Aplikasi</b>.
+  </div>
 
-    let deferredPrompt = null;
+</div>
 
-    // Cek apakah sudah terinstall
-    const isInstalled =
-      window.matchMedia("(display-mode: standalone)").matches ||
-      window.navigator.standalone === true;
+<script>
 
-    // Redirect ke website order
-    function openOrderWebsite() {
-      window.location.replace(TARGET_URL);
-    }
+// ======================================
+// URL HOME PAGE / WEBSITE ORDER
+// ======================================
 
-    // Registrasi Service Worker
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function() {
-        navigator.serviceWorker.register("./sw.js")
-          .catch(function(error) {
-            console.log("Service Worker Error:", error);
-          });
+const TARGET_URL =
+"https://script.google.com/macros/s/AKfycbwvndVST2ihd0uiG8x-pLIh-PRhn2G_YvGmuO2tcOLKaxUtlyNgcGKHJdIFPvf5G_7hNw/exec";
+
+const banner = document.getElementById("installBanner");
+const installBtn = document.getElementById("installBtn");
+const laterBtn = document.getElementById("laterBtn");
+const manualInstall = document.getElementById("manualInstall");
+
+let deferredPrompt = null;
+let installAttempted = false;
+
+// ======================================
+// CEK STATUS INSTALL
+// ======================================
+
+const isInstalled =
+  window.matchMedia("(display-mode: standalone)").matches ||
+  window.navigator.standalone === true;
+
+// ======================================
+// BUKA HOME PAGE OTOMATIS
+// ======================================
+
+function openHomePage() {
+  window.location.replace(TARGET_URL);
+}
+
+// Jika sudah install, langsung buka home page
+if (isInstalled) {
+
+  openHomePage();
+
+} else {
+
+  // Tampilkan banner install
+  banner.style.display = "block";
+
+}
+
+// ======================================
+// SERVICE WORKER
+// ======================================
+
+if ("serviceWorker" in navigator) {
+
+  window.addEventListener("load", function() {
+
+    navigator.serviceWorker.register("./sw.js")
+      .then(function(registration) {
+        console.log("PWA aktif:", registration.scope);
+      })
+      .catch(function(error) {
+        console.log("Service Worker error:", error);
       });
-    }
 
-    // Jika aplikasi sudah terinstall
-    if (isInstalled) {
-      openOrderWebsite();
+  });
+
+}
+
+// ======================================
+// DETEKSI PROMPT INSTALL
+// ======================================
+
+window.addEventListener("beforeinstallprompt", function(event) {
+
+  // Mencegah prompt muncul otomatis
+  event.preventDefault();
+
+  // Simpan prompt
+  deferredPrompt = event;
+
+});
+
+// ======================================
+// TOMBOL INSTALL SEKARANG
+// ======================================
+
+installBtn.addEventListener("click", async function() {
+
+  installAttempted = true;
+
+  // Jika browser mendukung prompt instalasi
+  if (deferredPrompt) {
+
+    // Jalankan prompt install langsung
+    deferredPrompt.prompt();
+
+    const result = await deferredPrompt.userChoice;
+
+    if (result.outcome === "accepted") {
+
+      banner.style.display = "none";
+
     } else {
-      // Tampilkan banner
-      banner.style.display = "block";
 
-      // Jika browser tidak mendukung install prompt
-      openWebsite.style.display = "block";
-      openWebsite.onclick = openOrderWebsite;
+      // Jika pengguna membatalkan install
+      openHomePage();
+
     }
 
-    // Browser mendeteksi PWA bisa diinstall
-    window.addEventListener("beforeinstallprompt", function(e) {
-      e.preventDefault();
-      deferredPrompt = e;
+    deferredPrompt = null;
 
-      installBtn.style.display = "block";
-      manualInstall.style.display = "none";
-    });
+  } else {
 
-    // Tombol INSTALL
-    installBtn.addEventListener("click", async function() {
+    // Browser tidak menyediakan prompt otomatis
+    manualInstall.style.display = "block";
 
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
+    installBtn.textContent = "IKUTI PETUNJUK INSTALL";
 
-        const result = await deferredPrompt.userChoice;
+  }
 
-        if (result.outcome === "accepted") {
-          banner.style.display = "none";
-        }
+});
 
-        deferredPrompt = null;
+// ======================================
+// TOMBOL NANTI
+// ======================================
 
-      } else {
-        // iPhone / Safari / browser yang tidak menyediakan prompt
-        manualInstall.style.display = "block";
-      }
-    });
+laterBtn.addEventListener("click", function() {
 
-    // Tombol NANTI
-    laterBtn.addEventListener("click", function() {
-      banner.style.display = "none";
-      openWebsite.style.display = "block";
-    });
+  // Langsung buka Home Page
+  openHomePage();
 
-    // Setelah berhasil diinstall
-    window.addEventListener("appinstalled", function() {
-      banner.style.display = "none";
-      openOrderWebsite();
-    });
+});
 
-  </script>
+// ======================================
+// BERHASIL DIINSTALL
+// ======================================
+
+window.addEventListener("appinstalled", function() {
+
+  banner.style.display = "none";
+
+  // Buka halaman order setelah install
+  openHomePage();
+
+});
+
+</script>
 
 </body>
 </html>

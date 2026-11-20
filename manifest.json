@@ -1,8 +1,6 @@
-
 {
   "name": "Order Asap Pedas X Teko",
   "short_name": "Asap Pedas",
-  "description": "Aplikasi Order Asap Pedas X Teko",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

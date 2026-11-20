@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Aplikasi Web</title>
-  
-  <!-- Link ke Manifest PWA -->
-  <meta name="theme-color" content="#0f172a">
-  
-  <!-- Dukungan untuk iOS (Safari) -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" type="image/png" href="https://monsterlongpotato.github.io/absensi/Logo%20Long%20Potato%20PNG%20500%20x%20500%20px.png">
+    <meta name="theme-color" content="#fc8c02">
+    <title>Aplikasi Absensi Long Potato</title>
+    
+    <!-- Manifest & Icon untuk Pintasan Chrome (PWA) -->
+    <link rel="manifest" id="manifest-placeholder">
+    <link rel="apple-touch-icon" href="https://monsterlongpotato.github.io/absensi/Logo%20Long%20Potato%20PNG%20500%20x%20500%20px.png">
 
+
+  
   <style>
     * {
       margin: 0;
@@ -99,37 +99,48 @@
   </div>
 
   <script>
-    // Konfigurasi Manifest langsung di dalam index.html
-    const manifestData = {
-      "name": "Nama Lengkap Aplikasi Kamu",
-      "short_name": "NamaPendek",
-      "description": "Deskripsi singkat aplikasi kamu.",
-      "start_url": window.location.href,
-      "display": "standalone",
-      "background_color": "#ffffff",
-      "theme_color": "#0d6efd",
-      "orientation": "portrait-primary",
-      "icons": [
-        {
-          // Wajib menggunakan URL lengkap (https://...) atau Base64
-          "src": "https://via.placeholder.com/192/0d6efd/ffffff?text=192",
-          "type": "image/png",
-          "sizes": "192x192",
-          "purpose": "any maskable"
-        },
-        {
-          "src": "https://via.placeholder.com/512/0d6efd/ffffff?text=512",
-          "type": "image/png",
-          "sizes": "512x512",
-          "purpose": "any maskable"
-        }
-      ]
-    };
+    // 2. LOGIKA INSTALL PINTASAN KE LAYAR UTAMA (PWA)
+        // Membuat file manifest.json secara dinamis di dalam satu file
+        const manifestData = {
+            "name": "Absensi Monster Long Potato",
+            "short_name": "Absensi Long Potato",
+            "start_url": window.location.href,
+            "display": "standalone",
+            "background_color": "#ffffff",
+            "theme_color": "#ffe0c4",
+            "icons": [{
+                "src": "https://monsterlongpotato.github.io/absensi/Logo%20Long%20Potato%20PNG%20500%20x%20500%20px.png",
+                "sizes": "512x512",
+                "type": "image/png"
+            }]
+        };
+        const stringManifest = JSON.stringify(manifestData);
+        const blob = new Blob([stringManifest], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(blob);
+        document.querySelector('#manifest-placeholder').setAttribute('href', manifestURL);
 
-    // Mengubah objek JSON menjadi Blob URL dan memasangnya ke <link rel="manifest">
-    const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
-    const manifestURL = URL.createObjectURL(manifestBlob);
-    document.getElementById('my-manifest').setAttribute('href', manifestURL);
+        // Menangkap event install dari Google Chrome HP
+        let deferredPrompt;
+        const installBanner = document.getElementById('install-banner');
+        const btnInstall = document.getElementById('btn-install');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Munculkan banner install di bagian bawah layar
+            installBanner.style.display = 'flex';
+        });
+
+        btnInstall.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBanner.style.display = 'none';
+                }
+                deferredPrompt = null;
+            }
+        });
   </script>
 
   
